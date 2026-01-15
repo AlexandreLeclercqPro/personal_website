@@ -3,3 +3,5 @@ py:
 
 rm:
 	docker-compose down
+
+rpy: rm py
