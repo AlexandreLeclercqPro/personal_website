@@ -33,20 +33,6 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(card);
     });
 
-    // Bouton de téléchargement PDF
-    const downloadBtn = document.getElementById('downloadBtn');
-    
-    if (downloadBtn) {
-        downloadBtn.addEventListener('click', function() {
-            // Option 1: Impression navigateur (simple)
-            window.print();
-            
-            // Option 2: Si vous voulez implémenter une vraie génération PDF
-            // vous devrez ajouter une bibliothèque comme jsPDF ou html2pdf
-            // et ajouter la logique ici
-        });
-    }
-
     // Animation des tags de compétences
     const skillTags = document.querySelectorAll('.skill-tag');
     skillTags.forEach((tag, index) => {
@@ -116,22 +102,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Lancer l'animation des tags après le chargement
     setTimeout(animateSkillTags, 1000);
-
-    // Easter egg: Konami code
-    let konamiCode = [];
-    const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
-    
-    document.addEventListener('keydown', (e) => {
-        konamiCode.push(e.key);
-        konamiCode = konamiCode.slice(-konamiSequence.length);
-        
-        if (konamiCode.join(',') === konamiSequence.join(',')) {
-            document.body.style.animation = 'rainbow 2s infinite';
-            setTimeout(() => {
-                document.body.style.animation = '';
-            }, 5000);
-        }
-    });
 
     // Log pour le debug
     console.log('🚀 CV chargé avec succès!');

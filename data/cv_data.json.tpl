@@ -1,6 +1,7 @@
 {
   "nom": "Votre Nom",
   "titre": "Développeur Full Stack",
+  "photo": "/static/images/default.jpg",
   "email": "votre.email@example.com",
   "telephone": "+33 6 12 34 56 78",
   "linkedin": "https://linkedin.com/in/votre-profil",

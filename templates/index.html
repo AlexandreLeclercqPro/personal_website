@@ -10,9 +10,16 @@
     <div class="container">
         <!-- En-tête -->
         <header class="header">
-            <div class="header-content">
-                <h1 class="name">{{ cv.nom }}</h1>
-                <p class="title">{{ cv.titre }}</p>
+            <div class="header-main">
+                {% if cv.photo %}
+                <div class="profile-photo-container">
+                    <img src="{{ cv.photo }}" alt="Photo de {{ cv.nom }}" class="profile-photo">
+                </div>
+                {% endif %}
+                <div class="header-content">
+                    <h1 class="name">{{ cv.nom }}</h1>
+                    <p class="title">{{ cv.titre }}</p>
+                </div>
             </div>
             <div class="contact-info">
                 <a href="mailto:{{ cv.email }}" class="contact-item">
@@ -112,7 +119,9 @@
 
         <!-- Bouton téléchargement PDF -->
         <div class="download-section">
-            <button id="downloadBtn" class="download-btn">Télécharger le CV en PDF</button>
+            <a href="/download-cv">
+                <button class="download-btn">Télécharger le CV en PDF</button>
+            </a>
         </div>
     </div>
 
