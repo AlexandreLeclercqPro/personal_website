@@ -1,0 +1,11 @@
+services:
+  cv-app:
+    build: .
+    container_name: mon-cv
+    ports:
+      - "${HOST_PORT}:8000"
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
