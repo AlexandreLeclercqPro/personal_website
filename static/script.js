@@ -1,6 +1,57 @@
 // Animation au scroll
 document.addEventListener('DOMContentLoaded', function() {
-    // Observer pour les animations au scroll
+    // === GESTION DU MENU LATÉRAL ===
+    const sidebar = document.getElementById('sidebar');
+    const sidebarContent = document.getElementById('sidebarContent');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebarClose = document.getElementById('sidebarClose');
+    
+    // Créer l'overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'sidebar-overlay';
+    document.body.appendChild(overlay);
+    
+    // Fonction pour ouvrir le menu
+    function openSidebar() {
+        sidebarContent.classList.add('open');
+        overlay.classList.add('active');
+        sidebarToggle.classList.add('hidden'); // Masquer le bouton hamburger
+        document.body.style.overflow = 'hidden';
+    }
+    
+    // Fonction pour fermer le menu
+    function closeSidebar() {
+        sidebarContent.classList.remove('open');
+        overlay.classList.remove('active');
+        sidebarToggle.classList.remove('hidden'); // Réafficher le bouton hamburger
+        document.body.style.overflow = '';
+    }
+    
+    // Event listeners pour le menu
+    sidebarToggle.addEventListener('click', openSidebar);
+    sidebarClose.addEventListener('click', closeSidebar);
+    overlay.addEventListener('click', closeSidebar);
+    
+    // Fermer avec la touche Echap
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && sidebarContent.classList.contains('open')) {
+            closeSidebar();
+        }
+    });
+    
+    // Activer l'élément de menu correspondant à la page actuelle
+    const currentPath = window.location.pathname;
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+        const href = item.getAttribute('href');
+        if (href === currentPath || (currentPath === '/' && href === '/')) {
+            item.classList.add('active');
+        } else {
+            item.classList.remove('active');
+        }
+    });
+    
+    // === ANIMATIONS AU SCROLL ===
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -40,12 +91,13 @@ document.addEventListener('DOMContentLoaded', function() {
         tag.classList.add('fade-in-tag');
     });
 
-    // Smooth scroll pour les liens internes (si vous en ajoutez)
+    // Smooth scroll pour les liens internes
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
             if (target) {
+                closeSidebar(); // Fermer le menu avant de scroller
                 target.scrollIntoView({
                     behavior: 'smooth',
                     block: 'start'
@@ -64,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Animation de typing pour le titre (optionnel)
+    // Animation de typing pour le titre
     const titleElement = document.querySelector('.title');
     if (titleElement && titleElement.textContent) {
         const originalText = titleElement.textContent;
@@ -79,7 +131,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // Démarrer l'animation après un court délai
         setTimeout(typeWriter, 500);
     }
 
@@ -100,10 +151,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     };
 
-    // Lancer l'animation des tags après le chargement
     setTimeout(animateSkillTags, 1000);
 
-    // Log pour le debug
+    // Animation des cartes de langues au scroll
+    const langueCards = document.querySelectorAll('.langue-card');
+    langueCards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        observer.observe(card);
+    });
+
     console.log('🚀 CV chargé avec succès!');
     console.log('💡 Astuce: Utilisez Ctrl+P ou Cmd+P pour imprimer le CV');
 });

@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playground - Portfolio</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .playground-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+            padding: 100px 20px 50px 20px;
+        }
+        
+        .playground-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .playground-title {
+            color: white;
+            font-size: 3.5rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .playground-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.3rem;
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .experiment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .experiment-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+        }
+        
+        .experiment-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+        
+        .experiment-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #f97316 0%, #ec4899 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .experiment-card h3 {
+            color: #1f2937;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .experiment-card p {
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .experiment-status {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+        
+        .status-soon {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .status-active {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .demo-area {
+            background: #f9fafb;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .demo-button {
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-size: 1.1rem;
+        }
+        
+        .demo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(249, 115, 22, 0.4);
+        }
+        
+        .demo-output {
+            background: #1f2937;
+            color: #10b981;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: #f97316;
+            box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Menu latéral -->
+    <div class="sidebar" id="sidebar">
+        <button class="sidebar-toggle" id="sidebarToggle">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+        
+        <div class="sidebar-content" id="sidebarContent">
+            <div class="sidebar-header">
+                <h3>Navigation</h3>
+                <button class="sidebar-close" id="sidebarClose">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="/" class="nav-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    CV Principal
+                </a>
+                
+                <div class="nav-divider">
+                    <span>Pages de test</span>
+                </div>
+                
+                <a href="/test-api" class="nav-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="16 18 22 12 16 6"></polyline>
+                        <polyline points="8 6 2 12 8 18"></polyline>
+                    </svg>
+                    Test API
+                </a>
+                
+                <a href="/playground" class="nav-item active">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                        <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                    Playground
+                </a>
+                
+                <a href="/api/cv" class="nav-item" target="_blank">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                    </svg>
+                    API JSON
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <div class="playground-container">
+        <div class="playground-content">
+            <h1 class="playground-title">🎮 Playground</h1>
+            <p class="playground-subtitle">
+                Espace de test et d'expérimentation pour de futures fonctionnalités
+            </p>
+            
+            <div class="experiment-grid">
+                <!-- Calculateur de compétences -->
+                <div class="experiment-card">
+                    <div class="experiment-icon">🧮</div>
+                    <h3>Analyseur de CV</h3>
+                    <p>Testez l'analyse automatique des données du CV et obtenez des statistiques.</p>
+                    <span class="experiment-status status-active">Actif</span>
+                    
+                    <div class="demo-area">
+                        <button class="demo-button" onclick="analyzeCV()">
+                            Analyser le CV
+                        </button>
+                        <div class="demo-output" id="cv-analysis">
+                            Cliquez pour analyser
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Générateur de présentation -->
+                <div class="experiment-card">
+                    <div class="experiment-icon">✨</div>
+                    <h3>Générateur de Bio</h3>
+                    <p>Générez une courte biographie à partir de vos compétences principales.</p>
+                    <span class="experiment-status status-active">Actif</span>
+                    
+                    <div class="demo-area">
+                        <input type="text" class="input-field" id="bio-skills" 
+                               placeholder="Ex: Python, React, Design" />
+                        <button class="demo-button" onclick="generateBio()">
+                            Générer Bio
+                        </button>
+                        <div class="demo-output" id="bio-output">
+                            Entrez des compétences
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Validation email -->
+                <div class="experiment-card">
+                    <div class="experiment-icon">📧</div>
+                    <h3>Validateur de Contact</h3>
+                    <p>Testez la validation des informations de contact.</p>
+                    <span class="experiment-status status-active">Actif</span>
+                    
+                    <div class="demo-area">
+                        <input type="email" class="input-field" id="test-email" 
+                               placeholder="Entrez un email" />
+                        <button class="demo-button" onclick="validateEmail()">
+                            Valider Email
+                        </button>
+                        <div class="demo-output" id="email-result">
+                            Entrez un email
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Export JSON -->
+                <div class="experiment-card">
+                    <div class="experiment-icon">💾</div>
+                    <h3>Export Personnalisé</h3>
+                    <p>Exportez une version simplifiée du CV en JSON.</p>
+                    <span class="experiment-status status-active">Actif</span>
+                    
+                    <div class="demo-area">
+                        <button class="demo-button" onclick="exportSimplified()">
+                            Exporter Version Simple
+                        </button>
+                        <div class="demo-output" id="export-output">
+                            Cliquez pour exporter
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Machine Learning -->
+                <div class="experiment-card">
+                    <div class="experiment-icon">🤖</div>
+                    <h3>IA d'Analyse</h3>
+                    <p>Analyse intelligente des compétences et suggestions d'amélioration.</p>
+                    <span class="experiment-status status-soon">Bientôt</span>
+                    
+                    <div class="demo-area">
+                        <button class="demo-button" disabled style="opacity: 0.5; cursor: not-allowed;">
+                            En développement
+                        </button>
+                        <div class="demo-output">
+                            Fonctionnalité à venir
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Chatbot -->
+                <div class="experiment-card">
+                    <div class="experiment-icon">💬</div>
+                    <h3>Assistant Virtuel</h3>
+                    <p>Chatbot interactif pour répondre aux questions sur le CV.</p>
+                    <span class="experiment-status status-soon">Bientôt</span>
+                    
+                    <div class="demo-area">
+                        <button class="demo-button" disabled style="opacity: 0.5; cursor: not-allowed;">
+                            En développement
+                        </button>
+                        <div class="demo-output">
+                            Fonctionnalité à venir
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+    <script>
+        async function analyzeCV() {
+            const output = document.getElementById('cv-analysis');
+            output.innerHTML = '⏳ Analyse en cours...';
+            
+            try {
+                const response = await fetch('/api/cv');
+                const data = await response.json();
+                
+                const stats = {
+                    experiences: data.experiences?.length || 0,
+                    formations: data.formations?.length || 0,
+                    projets: data.projets?.length || 0,
+                    competences: Object.keys(data.competences || {}).length
+                };
+                
+                output.innerHTML = `
+                    ✅ Analyse terminée!
+                    • ${stats.experiences} expériences
+                    • ${stats.formations} formations
+                    • ${stats.projets} projets
+                    • ${stats.competences} catégories de compétences
+                `;
+            } catch (error) {
+                output.innerHTML = `❌ Erreur: ${error.message}`;
+            }
+        }
+        
+        function generateBio() {
+            const skills = document.getElementById('bio-skills').value;
+            const output = document.getElementById('bio-output');
+            
+            if (!skills.trim()) {
+                output.innerHTML = '⚠️ Veuillez entrer des compétences';
+                return;
+            }
+            
+            const skillsList = skills.split(',').map(s => s.trim()).filter(s => s);
+            const bio = `Professionnel spécialisé en ${skillsList.join(', ')}. 
+            Passionné par l'innovation et la résolution de problèmes complexes.`;
+            
+            output.innerHTML = `✨ ${bio}`;
+        }
+        
+        function validateEmail() {
+            const email = document.getElementById('test-email').value;
+            const output = document.getElementById('email-result');
+            
+            if (!email) {
+                output.innerHTML = '⚠️ Veuillez entrer un email';
+                return;
+            }
+            
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const isValid = emailRegex.test(email);
+            
+            if (isValid) {
+                output.innerHTML = `✅ Email valide: ${email}`;
+            } else {
+                output.innerHTML = `❌ Email invalide: ${email}`;
+            }
+        }
+        
+        async function exportSimplified() {
+            const output = document.getElementById('export-output');
+            output.innerHTML = '⏳ Export en cours...';
+            
+            try {
+                const response = await fetch('/api/cv');
+                const data = await response.json();
+                
+                const simplified = {
+                    nom: data.nom,
+                    titre: data.titre,
+                    email: data.email,
+                    nbExperiences: data.experiences?.length || 0,
+                    nbProjets: data.projets?.length || 0
+                };
+                
+                const blob = new Blob([JSON.stringify(simplified, null, 2)], 
+                                     { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'cv-simplifie.json';
+                a.click();
+                
+                output.innerHTML = '✅ Export réussi! Fichier téléchargé.';
+            } catch (error) {
+                output.innerHTML = `❌ Erreur: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
