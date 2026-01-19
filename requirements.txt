@@ -2,11 +2,13 @@ annotated-types==0.7.0
 anyio==3.7.1
 click==8.3.1
 fastapi==0.104.1
+gunicorn==23.0.0
 h11==0.16.0
 httptools==0.7.1
 idna==3.11
 Jinja2==3.1.2
 MarkupSafe==3.0.3
+packaging==25.0
 pillow==12.1.0
 pydantic==2.12.5
 pydantic_core==2.41.5

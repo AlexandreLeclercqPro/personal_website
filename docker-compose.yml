@@ -8,4 +8,19 @@ services:
       - .:/app
     environment:
       - PYTHONUNBUFFERED=1
-    restart: unless-stopped
+    restart: always
+
+  
+  nginx:
+    image: nginx:latest
+    container_name: nginx_proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./config/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./static:/app/static:ro
+    depends_on:
+      - cv-app
+    restart: always
+
