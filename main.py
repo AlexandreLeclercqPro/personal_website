@@ -135,20 +135,3 @@ def download_cv():
         filename="Mon_CV.pdf",
         media_type="application/pdf"
     )
-
-# Routes pour les pages de test API
-@app.get("/test-api", response_class=HTMLResponse)
-async def test_api_page(request: Request):
-    """Page de test pour les API"""
-    return templates.TemplateResponse(
-        "test_api.html",
-        {"request": request}
-    )
-
-@app.get("/playground", response_class=HTMLResponse)
-async def playground_page(request: Request):
-    """Page playground pour tester des fonctionnalités"""
-    return templates.TemplateResponse(
-        "playground.html",
-        {"request": request}
-    )
