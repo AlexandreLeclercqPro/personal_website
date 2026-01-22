@@ -1,7 +1,7 @@
 py:
-	docker-compose up -d --build
+	docker compose up -d --build
 
 rm:
-	docker-compose down
+	docker compose down
 
 rpy: rm py
