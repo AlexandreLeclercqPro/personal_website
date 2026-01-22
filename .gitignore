@@ -4,3 +4,6 @@ cv_data.json
 profile.jpg
 cv.pdf
 /static/images/logos
+
+# Let's Encrypt certificates
+/certbot/
