@@ -32,5 +32,12 @@ services:
     volumes:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+      - ./scripts/certbot-entrypoint.sh:/certbot-entrypoint.sh:ro
+    environment:
+      - DOMAIN=${DOMAIN}
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
+      - LETSENCRYPT_STAGING=${LETSENCRYPT_STAGING:-0}
+    entrypoint: "/bin/sh /certbot-entrypoint.sh"
+    depends_on:
+      - nginx
 
