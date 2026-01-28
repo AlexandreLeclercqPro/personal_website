@@ -317,6 +317,35 @@ body {
     box-shadow: 0 10px 30px rgba(249, 115, 22, 0.5);
 }
 
+/* Contact reveal effect */
+.contact-reveal {
+    cursor: pointer;
+    position: relative;
+}
+
+.contact-reveal .contact-value {
+    visibility: hidden;
+}
+
+.contact-reveal .contact-label {
+    position: absolute;
+    left: calc(20px + 0.8rem + 2rem);
+}
+
+.contact-reveal:hover .contact-value {
+    visibility: visible;
+}
+
+.contact-reveal:hover .contact-label {
+    visibility: hidden;
+}
+
+.contact-reveal:hover {
+    background: var(--orange);
+    color: #1f2937;
+    border-color: var(--orange);
+}
+
 /* SECTION PRÉSENTATION - Orange */
 .section {
     width: 100%;
