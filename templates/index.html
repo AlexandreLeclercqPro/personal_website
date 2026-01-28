@@ -119,24 +119,6 @@
             </div>
         </section>
 
-        <!-- LANGUES - Violet -->
-        <section class="section section-langues">
-            <div class="content-wrapper">
-                <h2 class="section-title">Langues parlées</h2>
-                <div class="langues-grid">
-                    {% for langue in cv.langues %}
-                    <div class="langue-card">
-                        <div class="langue-nom">{{ langue.emoji }} {{ langue.nom }}</div>
-                        <div class="langue-niveau">{{ langue.niveau }}</div>
-                        <div class="niveau-barre">
-                            <div class="niveau-progress" style="width: {{ langue.pourcentage }}%"></div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </section>
-
         <!-- EXPÉRIENCE - Blanc -->
         <section class="section section-experience">
             <div class="content-wrapper">
@@ -194,6 +176,24 @@
                             {% for comp in competences %}
                             <span class="skill-tag">{{ comp }}</span>
                             {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <!-- LANGUES - Violet -->
+        <section class="section section-langues">
+            <div class="content-wrapper">
+                <h2 class="section-title">Langues parlées</h2>
+                <div class="langues-grid">
+                    {% for langue in cv.langues %}
+                    <div class="langue-card">
+                        <div class="langue-nom">{{ langue.emoji }} {{ langue.nom }}</div>
+                        <div class="langue-niveau">{{ langue.niveau }}</div>
+                        <div class="niveau-barre">
+                            <div class="niveau-progress" style="width: {{ langue.pourcentage }}%"></div>
                         </div>
                     </div>
                     {% endfor %}
