@@ -706,7 +706,7 @@ body {
     }
 
     .header {
-        padding: 4rem 1.5rem;
+        padding: 4rem 1.5rem 12rem 1.5rem;
         min-height: auto;
     }
 
@@ -749,6 +749,15 @@ body {
     .contact-info {
         flex-direction: column;
         align-items: stretch;
+    }
+
+    /* Sur mobile, afficher directement les valeurs (pas de hover sur tactile) */
+    .contact-reveal .contact-label {
+        display: none;
+    }
+
+    .contact-reveal .contact-value {
+        visibility: visible;
     }
 
     .sidebar-toggle {
