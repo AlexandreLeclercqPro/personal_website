@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot - {{ cv.nom }}</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- Menu latéral dépliable -->
+    <div class="sidebar" id="sidebar">
+        <button class="sidebar-toggle" id="sidebarToggle">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+
+        <div class="sidebar-content" id="sidebarContent">
+            <div class="sidebar-header">
+                <h3>Navigation</h3>
+                <button class="sidebar-close" id="sidebarClose">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="/" class="nav-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    Accueil
+                </a>
+
+                <div class="nav-divider">
+                    <span>Mes projets</span>
+                </div>
+
+                <a href="/chatbot" class="nav-item active">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    Chatbot
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- HERO CHATBOT - Gris foncé -->
+        <header class="header chatbot-header">
+            <div class="chatbot-hero">
+                <div class="chatbot-icon">
+                    <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        <circle cx="9" cy="10" r="1" fill="currentColor"></circle>
+                        <circle cx="15" cy="10" r="1" fill="currentColor"></circle>
+                    </svg>
+                </div>
+                <h1 class="chatbot-title">Assistant IA</h1>
+                <p class="chatbot-subtitle">Posez-moi vos questions</p>
+            </div>
+        </header>
+
+        <!-- ZONE DE CHAT - Orange -->
+        <section class="section section-chat">
+            <div class="content-wrapper">
+                <div class="chat-container">
+                    <!-- Messages -->
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message bot-message">
+                            <div class="message-avatar">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                                </svg>
+                            </div>
+                            <div class="message-content">
+                                <p>Bonjour ! Je suis votre assistant IA. Comment puis-je vous aider aujourd'hui ?</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Zone de saisie -->
+                    <div class="chat-input-container">
+                        <form id="chatForm" class="chat-form">
+                            <input
+                                type="text"
+                                id="chatInput"
+                                class="chat-input"
+                                placeholder="Tapez votre message..."
+                                autocomplete="off"
+                            >
+                            <button type="submit" class="chat-send-btn" id="sendBtn">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="/static/script.js"></script>
+    <script>
+        // === CHATBOT FUNCTIONALITY ===
+        const chatForm = document.getElementById('chatForm');
+        const chatInput = document.getElementById('chatInput');
+        const chatMessages = document.getElementById('chatMessages');
+        const sendBtn = document.getElementById('sendBtn');
+
+        // API endpoint - à configurer selon votre backend
+        const API_ENDPOINT = '/api/chat';
+
+        // Ajouter un message au chat
+        function addMessage(content, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+
+            const avatarSvg = isUser
+                ? `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                   </svg>`
+                : `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                   </svg>`;
+
+            messageDiv.innerHTML = `
+                <div class="message-avatar">${avatarSvg}</div>
+                <div class="message-content"><p>${escapeHtml(content)}</p></div>
+            `;
+
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            return messageDiv;
+        }
+
+        // Afficher l'indicateur de frappe
+        function showTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message bot-message typing-indicator';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = `
+                <div class="message-avatar">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                </div>
+                <div class="message-content">
+                    <div class="typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            `;
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Supprimer l'indicateur de frappe
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) {
+                indicator.remove();
+            }
+        }
+
+        // Échapper le HTML pour éviter les injections
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Envoyer le message à l'API
+        async function sendMessage(message) {
+            try {
+                const response = await fetch(API_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: message }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erreur réseau');
+                }
+
+                const data = await response.json();
+                return data.response || data.message || "Désolé, je n'ai pas compris.";
+            } catch (error) {
+                console.error('Erreur:', error);
+                return "Désolé, une erreur s'est produite. Veuillez réessayer.";
+            }
+        }
+
+        // Gérer l'envoi du formulaire
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const message = chatInput.value.trim();
+            if (!message) return;
+
+            // Désactiver l'input pendant l'envoi
+            chatInput.disabled = true;
+            sendBtn.disabled = true;
+
+            // Ajouter le message utilisateur
+            addMessage(message, true);
+            chatInput.value = '';
+
+            // Afficher l'indicateur de frappe
+            showTypingIndicator();
+
+            // Envoyer à l'API et attendre la réponse
+            const response = await sendMessage(message);
+
+            // Supprimer l'indicateur et afficher la réponse
+            removeTypingIndicator();
+            addMessage(response, false);
+
+            // Réactiver l'input
+            chatInput.disabled = false;
+            sendBtn.disabled = false;
+            chatInput.focus();
+        });
+
+        // Focus sur l'input au chargement
+        chatInput.focus();
+    </script>
+</body>
+</html>

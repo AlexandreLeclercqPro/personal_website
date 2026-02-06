@@ -135,3 +135,25 @@ def download_cv():
         filename="Mon_CV.pdf",
         media_type="application/pdf"
     )
+
+
+@app.get("/chatbot", response_class=HTMLResponse)
+async def chatbot(request: Request):
+    """Page du chatbot"""
+    return templates.TemplateResponse(
+        "chatbot.html",
+        {"request": request, "cv": cv_data}
+    )
+
+
+@app.post("/api/chat")
+async def chat(request: Request):
+    """API endpoint pour le chatbot - à personnaliser selon votre backend IA"""
+    data = await request.json()
+    user_message = data.get("message", "")
+
+    # TODO: Intégrer ici votre API de chatbot (OpenAI, Anthropic, etc.)
+    # Exemple de réponse par défaut
+    response = f"Vous avez dit : '{user_message}'. Cette réponse est un placeholder. Configurez votre API de chatbot dans main.py."
+
+    return {"response": response}
