@@ -4,6 +4,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pathlib import Path
 import json
+import time
 from PIL import Image
 import os
 
@@ -148,12 +149,13 @@ async def chatbot(request: Request):
 
 @app.post("/api/chat")
 async def chat(request: Request):
-    """API endpoint pour le chatbot - à personnaliser selon votre backend IA"""
+    """API endpoint pour le chatbot """
     data = await request.json()
     user_message = data.get("message", "")
 
-    # TODO: Intégrer ici votre API de chatbot (OpenAI, Anthropic, etc.)
+    # TODO: Intégrer ici API de chatbot
     # Exemple de réponse par défaut
-    response = f"Vous avez dit : '{user_message}'. Cette réponse est un placeholder. Configurez votre API de chatbot dans main.py."
+    time.sleep(10) # pause de 5 sec
+    response = f"Vous avez dit : '{user_message}'."
 
     return {"response": response}

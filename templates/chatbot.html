@@ -45,7 +45,7 @@
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                     </svg>
-                    Chatbot
+                    Agent de Recherche IA
                 </a>
             </nav>
         </div>
@@ -62,7 +62,7 @@
                         <circle cx="15" cy="10" r="1" fill="currentColor"></circle>
                     </svg>
                 </div>
-                <h1 class="chatbot-title">Assistant IA</h1>
+                <h1 class="chatbot-title">Agent de Recherche IA</h1>
                 <p class="chatbot-subtitle">Posez-moi vos questions</p>
             </div>
         </header>
@@ -80,7 +80,7 @@
                                 </svg>
                             </div>
                             <div class="message-content">
-                                <p>Bonjour ! Je suis votre assistant IA. Comment puis-je vous aider aujourd'hui ?</p>
+                                <p>Bonjour ! Je suis votre Agent de Recherche IA. Je peux faire des recherches sur internet pour vous répondre. Comment puis-je vous aider aujourd'hui ?</p>
                             </div>
                         </div>
                     </div>
@@ -92,7 +92,7 @@
                                 type="text"
                                 id="chatInput"
                                 class="chat-input"
-                                placeholder="Tapez votre message..."
+                                placeholder="Tapez votre question..."
                                 autocomplete="off"
                             >
                             <button type="submit" class="chat-send-btn" id="sendBtn">
@@ -110,6 +110,7 @@
 
     <script src="/static/script.js"></script>
     <script>
+        // TODO : Déplacer dans le script js
         // === CHATBOT FUNCTIONALITY ===
         const chatForm = document.getElementById('chatForm');
         const chatInput = document.getElementById('chatInput');
@@ -144,6 +145,17 @@
             return messageDiv;
         }
 
+        // Étapes affichées sous le gif pendant l'attente de la réponse.
+        // "delay" = temps (ms) après le début avant que ce texte s'affiche.
+        // À ajuster/adapter selon les vraies étapes de ton backend une fois qu'il les expose.
+        const TYPING_STAGES = [
+            { text: "Récupération des données...", delay: 0 },
+            { text: "Analyse de la question...", delay: 10 },
+            { text: "Génération de la réponse...", delay: 20 },
+        ];
+
+        let typingStageTimeouts = [];        
+
         // Afficher l'indicateur de frappe
         function showTypingIndicator() {
             const typingDiv = document.createElement('div');
@@ -156,11 +168,8 @@
                     </svg>
                 </div>
                 <div class="message-content">
-                    <div class="typing-dots">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
+                    <img src="/static//images/loading.gif" alt="Chargement en cours..." class="typing-gif">
+                    <p class="typing-status" id="typingStatus">${TYPING_STAGES[0].text}</p>
                 </div>
             `;
             chatMessages.appendChild(typingDiv);

@@ -950,6 +950,27 @@ body {
 }
 
 /* Indicateur de frappe */
+
+.typing-indicator .message-content {
+    text-align: center;
+}
+
+.message-content .typing-gif {
+    display: block;
+    height: 64px;
+    max-height: 64px;
+    width: auto;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.typing-status {
+    margin: 0.5rem 0 0 0;
+    font-size: 0.9rem;
+    color: #6b7280;
+    font-style: italic;
+}
+
 .typing-dots {
     display: flex;
     gap: 6px;
